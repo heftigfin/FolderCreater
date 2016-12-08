@@ -1,0 +1,2 @@
+Main-Class: FolderCreater
+Class-Path: FolderCreater.jar
