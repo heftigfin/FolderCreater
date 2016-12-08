@@ -45,6 +45,7 @@ public class Menu{
 	 	jm.add(progBar, BorderLayout.CENTER);
 
 	 	jm.setVisible(true);
+	 	System.out.println("test");
 	 }
 
 
