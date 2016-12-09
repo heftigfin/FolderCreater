@@ -24,7 +24,7 @@ public class Move{
 	}
 
 	//Sjekk som spørr om bruker vil ha med undermapper.
-	//copy til server og så delete orginale mappe.
+	//copy til server og så delete orginal mappe.
 	public void copyFolder(File source, File dest){
 
 		if(source.getPath().toLowerCase().equals(fc.getServer().getPath())){

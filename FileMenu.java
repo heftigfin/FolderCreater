@@ -5,13 +5,14 @@ import java.awt.event.*;
 
 
 public class FileMenu{
+
      private FolderCreater fc = new FolderCreater();
      private FolderAndMoveFile s = new FolderAndMoveFile();
      private File pdfDir;
      private Move m = new Move();
      private JFileChooser fold = new JFileChooser();
      private JFileChooser ser = new JFileChooser();
-
+     //Frame, button and panel declaration
      private JFrame jm;
      private JComponent progBar = new JProgressBar(0,100); 
      private JButton fileDir;
@@ -36,7 +37,7 @@ public class FileMenu{
          public void windowClosing(WindowEvent windowEvent){
             System.exit(0);
          }        
-      });    
+      });   
           //PDF,Server and init button panel
           initSubfoldPanel = new JPanel();
           initSubfoldPanel.setLayout(new BorderLayout());
@@ -65,24 +66,24 @@ public class FileMenu{
           initiatePanel =  new JPanel();     
           initiatePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
           initiatePanel.setSize(300,50);
-          //Folder creater button
-          initFolderCreate = new JButton("Lag mapper");
+          //Start button
+          initFolderCreate = new JButton("Start");
           initFolderCreate.addActionListener(new ActionListener(){
                public void actionPerformed(ActionEvent e){
-               System.out.println("Mapper");
+                    if(subFoldersCheck.isSelected()){
+                    System.out.println("YES");}
+                    else{System.out.println("NO");}
 
           }});          
-          initiatePanel.add(initFolderCreate);
+          initiatePanel.add(initFolderCreate, BorderLayout.LINE_START);
 
-          //Move to server/destination button
-          initMoveToServ = new JButton("Flytt til destinasjon/Server");
+          //Exit("Avslutt") button
+          initMoveToServ = new JButton("Avslutt");
           initMoveToServ.addActionListener(new ActionListener(){
                public void actionPerformed(ActionEvent e){
-               System.out.println("Server");
+               System.exit(0);
           }}); 
-          initiatePanel.add(initMoveToServ);
-
-  
+          initiatePanel.add(initMoveToServ, BorderLayout.LINE_END);
 
           //Subfolder button
           subFoldersCheck = new JCheckBox("Undermapper");
