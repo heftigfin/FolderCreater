@@ -6,7 +6,6 @@ import java.awt.event.*;
 
 public class FileMenu{
 
-     private FolderCreater fc = new FolderCreater();
      private FolderAndMoveFile s = new FolderAndMoveFile();
      private File pdfDir;
      private Move m = new Move();
@@ -14,15 +13,15 @@ public class FileMenu{
      private JFileChooser ser = new JFileChooser();
      //Frame, button and panel declaration
      private JFrame jm;
-     private JComponent progBar = new JProgressBar(0,100); 
-     private JButton fileDir;
-     private JButton serverDir;
      private JPanel fileDirPanel;
      private JPanel initiatePanel;
      private JPanel initSubfoldPanel;
-     private JCheckBox subFoldersCheck;
+     private JComponent progBar = new JProgressBar(0,100); 
+     private JButton fileDir;
+     private JButton serverDir;
      private JButton initFolderCreate;
      private JButton initMoveToServ;
+     private JCheckBox subFoldersCheck;
 
       public void show(){
           gui();
@@ -30,7 +29,7 @@ public class FileMenu{
 
       private void gui(){
           //main frame
-          jm = new JFrame("FolderCreater");
+          jm = new JFrame("FolderCreator");
           jm.setSize(320,450);
           jm.setLayout(new BorderLayout());
           jm.addWindowListener(new WindowAdapter() {
@@ -51,8 +50,6 @@ public class FileMenu{
           fileDir.addActionListener(new ActionListener(){
                public void actionPerformed(ActionEvent e){
                initiatePDFFolder();
-   
-
           }});
           fileDirPanel.add(fileDir);
           //server button
@@ -71,7 +68,8 @@ public class FileMenu{
           initFolderCreate.addActionListener(new ActionListener(){
                public void actionPerformed(ActionEvent e){
                     if(subFoldersCheck.isSelected()){
-                    System.out.println("YES");}
+                         s.start(fold.getSelectedFile());
+                         m.start(fold.getSelectedFile());}
                     else{System.out.println("NO");}
 
           }});          
@@ -104,23 +102,21 @@ public class FileMenu{
      	fold.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
      	int result = fold.showSaveDialog(fold);
      	if(result==JFileChooser.APPROVE_OPTION){
-               if(fold.getSelectedFile().getPath().toLowerCase().equals(fc.getServer().getPath().toLowerCase())){
+               if(fold.getSelectedFile().getPath().toLowerCase().equals(FolderCreater.fc.getServer().getPath().toLowerCase())){
                JOptionPane.showMessageDialog(null, "Samme filbane som Server.", "Error", JOptionPane.ERROR_MESSAGE);
                  } else pdfDir = fold.getCurrentDirectory();
 
      		}
 
-		//s.start(f.getSelectedFile());
-		//m.start(f.getSelectedFile());
 
 	}
      private void initiateServerFolder(){
 
-           ser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+          ser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
 
           int result = ser.showSaveDialog(fold);
           if(result==JFileChooser.APPROVE_OPTION){
-               fc.setServer(ser.getSelectedFile());
+               FolderCreater.fc.setServer(ser.getSelectedFile());
           }
      }
 }

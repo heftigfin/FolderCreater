@@ -1,6 +1,8 @@
 import java.io.*;
 
 public class FolderCreater{
+	
+ 	public static FolderCreater fc = new FolderCreater();
 
 	private File server = new File("m:/SCANNET");
 	
@@ -18,5 +20,3 @@ public class FolderCreater{
 		server = f;
 	}
 }
-
-

@@ -3,19 +3,18 @@ import javax.swing.*;
 
 public class Move{
  	
- 	FolderCreater fc = new FolderCreater();
 
 	public void start(File folder){
 
 		int dialogButton = JOptionPane.YES_NO_OPTION;
 		int dialogResult = JOptionPane.showConfirmDialog(null, "Flytte til server?", "Message", dialogButton);
 		if(dialogResult == JOptionPane.YES_OPTION){
-
+			System.out.println(FolderCreater.fc.getServer().getPath());
 			int dialogButton2 = JOptionPane.YES_NO_OPTION;
-			int dialogResult2 = JOptionPane.showConfirmDialog(null, checkNrOfFiles(folder) +" PDF filer vil bli flyttet. OK?", "Message", dialogButton2);
+			int dialogResult2 = JOptionPane.showConfirmDialog(null, checkNrOfFiles(folder) +" PDF filer i " +checknrOfFolders(folder) + " mapper vil bli flyttet. OK?", "Message", dialogButton2);
 			if(dialogResult2 == JOptionPane.YES_OPTION){
 
-				copyFolder(folder, fc.getServer());
+				copyFolder(folder, FolderCreater.fc.getServer());
 
 			} else System.exit(0);
 
@@ -27,7 +26,7 @@ public class Move{
 	//copy til server og så delete orginal mappe.
 	public void copyFolder(File source, File dest){
 
-		if(source.getPath().toLowerCase().equals(fc.getServer().getPath())){
+		if(source.getPath().toLowerCase().equals(FolderCreater.fc.getServer().getPath())){
      	JOptionPane.showMessageDialog(null, "Samme filbane som Server.", "Error", JOptionPane.ERROR_MESSAGE);
      	System.exit(0);
 		}
