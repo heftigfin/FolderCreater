@@ -156,4 +156,19 @@ public class Move{
 
 		return pdfNrCounter;
 	}
+	//
+	private int checknrOfFolders(File folder){
+		int folderNrCounter = 0;
+		File[] listOfFiles = folder.listFiles();
+
+		for (File file : listOfFiles) {
+
+			if(file.isDirectory()){
+				folderNrCounter++;
+				folderNrCounter += checkNrOfFiles(file);
+   		 	}
+ 
+   		 }
+		return folderNrCounter;
+	}
 }
