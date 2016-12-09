@@ -1,37 +1,125 @@
 import javax.swing.*;
 import java.io.*;
 import java.awt.*;
+import java.awt.event.*;
+
 
 public class FileMenu{
+     private FolderCreater fc = new FolderCreater();
+     private FolderAndMoveFile s = new FolderAndMoveFile();
+     private File pdfDir;
+     private Move m = new Move();
+     private JFileChooser fold = new JFileChooser();
+     private JFileChooser ser = new JFileChooser();
 
-	FolderAndMoveFile s = new FolderAndMoveFile();
-	Move m = new Move();
+     private JFrame jm;
+     private JComponent progBar = new JProgressBar(0,100); 
+     private JButton fileDir;
+     private JButton serverDir;
+     private JPanel fileDirPanel;
+     private JPanel initiatePanel;
+     private JPanel initSubfoldPanel;
+     private JCheckBox subFoldersCheck;
+     private JButton initFolderCreate;
+     private JButton initMoveToServ;
 
-	public void initiate(){
-		JFileChooser f = new JFileChooser();
-     	f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+      public void show(){
+          gui();
+      }
 
-     	int result = f.showSaveDialog(f);
+      private void gui(){
+          //main frame
+          jm = new JFrame("FolderCreater");
+          jm.setSize(320,450);
+          jm.setLayout(new BorderLayout());
+          jm.addWindowListener(new WindowAdapter() {
+         public void windowClosing(WindowEvent windowEvent){
+            System.exit(0);
+         }        
+      });    
+          //PDF,Server and init button panel
+          initSubfoldPanel = new JPanel();
+          initSubfoldPanel.setLayout(new BorderLayout());
+          initSubfoldPanel.setSize(350,70);
+          //PDF and Server button panel
+          fileDirPanel = new JPanel();
+          fileDirPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+          fileDirPanel.setSize(300,50);
+          //PDF folder button
+          fileDir = new JButton("Velg PDF mappe");
+          fileDir.addActionListener(new ActionListener(){
+               public void actionPerformed(ActionEvent e){
+               initiatePDFFolder();
+   
+
+          }});
+          fileDirPanel.add(fileDir);
+          //server button
+          serverDir = new JButton("Velg destinasjon");
+          serverDir.addActionListener(new ActionListener(){
+               public void actionPerformed(ActionEvent e){
+               initiateServerFolder();
+          }});
+          fileDirPanel.add(serverDir);
+
+          initiatePanel =  new JPanel();     
+          initiatePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+          initiatePanel.setSize(300,50);
+          //Folder creater button
+          initFolderCreate = new JButton("Lag mapper");
+          initFolderCreate.addActionListener(new ActionListener(){
+               public void actionPerformed(ActionEvent e){
+               System.out.println("Mapper");
+
+          }});          
+          initiatePanel.add(initFolderCreate);
+
+          //Move to server/destination button
+          initMoveToServ = new JButton("Flytt til destinasjon/Server");
+          initMoveToServ.addActionListener(new ActionListener(){
+               public void actionPerformed(ActionEvent e){
+               System.out.println("Server");
+          }}); 
+          initiatePanel.add(initMoveToServ);
+
+  
+
+          //Subfolder button
+          subFoldersCheck = new JCheckBox("Undermapper");
+          //Add panels
+          initSubfoldPanel.add(initiatePanel, BorderLayout.PAGE_START);
+          initSubfoldPanel.add(subFoldersCheck, BorderLayout.PAGE_END);
+          jm.add(initSubfoldPanel,BorderLayout.PAGE_END);
+          jm.add(fileDirPanel, BorderLayout.PAGE_START);
+          jm.add(progBar, BorderLayout.CENTER);
+
+          jm.setVisible(true);
+      }
+
+
+
+	private void initiatePDFFolder(){
+          
+     	fold.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+     	int result = fold.showSaveDialog(fold);
      	if(result==JFileChooser.APPROVE_OPTION){
-    		f.setCurrentDirectory(f.getCurrentDirectory());
-     		}else if(result==JFileChooser.CANCEL_OPTION){
-     			System.exit(0);
-     		}else if(f.getSelectedFile() == null) System.exit(0);
+               if(fold.getSelectedFile().getPath().toLowerCase().equals(fc.getServer().getPath().toLowerCase())){
+               JOptionPane.showMessageDialog(null, "Samme filbane som Server.", "Error", JOptionPane.ERROR_MESSAGE);
+                 } else pdfDir = fold.getCurrentDirectory();
 
+     		}
 
-     	
-
-
-
-     	if(f.getSelectedFile().getPath().toLowerCase().equals(FolderCreater.server.getPath())){
-     	JOptionPane.showMessageDialog(null, "Samme filbane som Server.", "Error", JOptionPane.ERROR_MESSAGE);
-     	System.exit(0);
-}
-		s.start(f.getSelectedFile());
-		m.start(f.getSelectedFile());
+		//s.start(f.getSelectedFile());
+		//m.start(f.getSelectedFile());
 
 	}
+     private void initiateServerFolder(){
 
+           ser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
 
+          int result = ser.showSaveDialog(fold);
+          if(result==JFileChooser.APPROVE_OPTION){
+               fc.setServer(ser.getSelectedFile());
+          }
+     }
 }
-

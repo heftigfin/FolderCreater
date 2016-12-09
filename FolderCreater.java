@@ -2,16 +2,21 @@ import java.io.*;
 
 public class FolderCreater{
 
-	public static File server = new File("m:/SCANNET");
+	private File server = new File("m:/SCANNET");
 	
 	public static void main(String[] args) {
 	
-		Menu me = new Menu();
+		FileMenu me = new FileMenu();
 		me.show();
-		//fm.initiate();
 
 	}
 
+	public File getServer(){
+		return server;
+	}
+	public void setServer(File f){
+		server = f;
+	}
 }
 
 

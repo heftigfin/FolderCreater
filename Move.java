@@ -3,6 +3,7 @@ import javax.swing.*;
 
 public class Move{
  	
+ 	FolderCreater fc = new FolderCreater();
 
 	public void start(File folder){
 
@@ -14,7 +15,7 @@ public class Move{
 			int dialogResult2 = JOptionPane.showConfirmDialog(null, checkNrOfFiles(folder) +" PDF filer vil bli flyttet. OK?", "Message", dialogButton2);
 			if(dialogResult2 == JOptionPane.YES_OPTION){
 
-				copyFolder(folder, FolderCreater.server);
+				copyFolder(folder, fc.getServer());
 
 			} else System.exit(0);
 
@@ -26,7 +27,7 @@ public class Move{
 	//copy til server og så delete orginale mappe.
 	public void copyFolder(File source, File dest){
 
-		if(source.getPath().toLowerCase().equals(FolderCreater.server.getPath())){
+		if(source.getPath().toLowerCase().equals(fc.getServer().getPath())){
      	JOptionPane.showMessageDialog(null, "Samme filbane som Server.", "Error", JOptionPane.ERROR_MESSAGE);
      	System.exit(0);
 		}
@@ -118,6 +119,7 @@ public class Move{
 		
 
         if(hasExtensionCounter){
+
         	int counterInc = Integer.parseInt(dest.substring(stNr+1, endNr)) + 1;
         	String extCounter = Integer.toString(counterInc);
         	fileWOutEx = new StringBuilder(dest).replace(stNr,endNr, "(" + extCounter).toString();
@@ -136,7 +138,6 @@ public class Move{
 				pdfCheck = true;
 			}
 		return pdfCheck;
-
 	}
 
 	private int checkNrOfFiles(File folder){
