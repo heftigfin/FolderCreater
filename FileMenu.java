@@ -67,11 +67,12 @@ public class FileMenu{
           initFolderCreate = new JButton("Start");
           initFolderCreate.addActionListener(new ActionListener(){
                public void actionPerformed(ActionEvent e){
+                    if(fold.getSelectedFile()!=null){
                     if(subFoldersCheck.isSelected()){
                          s.start(fold.getSelectedFile());
                          m.start(fold.getSelectedFile());}
-                    else{System.out.println("NO");}
-
+                    else System.out.println("NO");
+                    } else JOptionPane.showMessageDialog(null, "Ingen mappe valgt.","Error",JOptionPane.ERROR_MESSAGE);
           }});          
           initiatePanel.add(initFolderCreate, BorderLayout.LINE_START);
 
