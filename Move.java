@@ -13,22 +13,18 @@ public class Move{
 			int dialogButton2 = JOptionPane.YES_NO_OPTION;
 			int dialogResult2 = JOptionPane.showConfirmDialog(null, checkNrOfFiles(folder) +" PDF filer i " +checknrOfFolders(folder) + " mapper vil bli flyttet. OK?", "Message", dialogButton2);
 			if(dialogResult2 == JOptionPane.YES_OPTION){
-
 				copyFolder(folder, FolderCreater.fc.getServer());
 
-			} else System.exit(0);
-
-
-		}else System.exit(0);
+			} 
+		}
 	}
 
-	//Sjekk som spørr om bruker vil ha med undermapper.
-	//copy til server og så delete orginal mappe.
+	//lag en midlertidig mappe før du overfører og sletter.
 	public void copyFolder(File source, File dest){
 
 		if(source.getPath().toLowerCase().equals(FolderCreater.fc.getServer().getPath())){
-     	JOptionPane.showMessageDialog(null, "Samme filbane som Server.", "Error", JOptionPane.ERROR_MESSAGE);
-     	System.exit(0);
+     		JOptionPane.showMessageDialog(null, "Samme filbane som Server.", "Error", JOptionPane.ERROR_MESSAGE);
+     		System.exit(0);
 		}
 		if(source.isDirectory()){
 			
@@ -37,13 +33,14 @@ public class Move{
 			}
 
 			 String files[] = source.list();
-
        		 for (String file : files){
+
           	 	File srcFile = new File(source, file);
            		File destFile = new File(dest, file);
            		copyFolder(srcFile, destFile);
-				 }
-   			}
+				
+			}
+   		}
    		
  		else if(checkIfPdf(source.getPath())){
 
@@ -66,6 +63,8 @@ public class Move{
             	while ((length = in.read(buffer)) > 0){
                 out.write(buffer, 0, length);
             }
+            	out.close();
+    			in.close();
         }
         	catch (Exception e){
            	 	try{
@@ -82,11 +81,23 @@ public class Move{
                 e1.printStackTrace();
          		}
       		}
-
 		}
+
 
 	}
 
+	public void deleteOriginal(File source){
+
+		File[] index = source.listFiles();
+
+		for(File file : index){
+			if(file.isDirectory()){
+				deleteOriginal(file);
+			}
+		file.delete();
+		}   
+	}
+	
 	public boolean checkFileExist(File f){
 
 		boolean check = f.exists();
@@ -155,17 +166,15 @@ public class Move{
 
 		return pdfNrCounter;
 	}
-	//
+	
 	private int checknrOfFolders(File folder){
 		int folderNrCounter = 0;
 		File[] listOfFiles = folder.listFiles();
+		folderNrCounter++;
 
 		for (File file : listOfFiles) {
+			folderNrCounter += checkNrOfFiles(file);
 
-			if(file.isDirectory()){
-				folderNrCounter++;
-				folderNrCounter += checkNrOfFiles(file);
-   		 	}
  
    		 }
 		return folderNrCounter;

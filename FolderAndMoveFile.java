@@ -9,8 +9,10 @@ public class FolderAndMoveFile{
 	String destFolder = new String();
 
 		for (File file : listOfFiles) {
-
-   			if (file.isFile()) {
+			if(file.isDirectory() && FolderCreater.fc.getSubFoldCheck()){
+				start(file);
+			}
+   			else if (file.isFile()) {
    				if(m.checkIfPdf(file.getPath())){
 		
    					destFolder = isNumeric(file.getName());

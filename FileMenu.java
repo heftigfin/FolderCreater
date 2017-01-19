@@ -68,10 +68,19 @@ public class FileMenu{
           initFolderCreate.addActionListener(new ActionListener(){
                public void actionPerformed(ActionEvent e){
                     if(fold.getSelectedFile()!=null){
-                    if(subFoldersCheck.isSelected()){
-                         s.start(fold.getSelectedFile());
-                         m.start(fold.getSelectedFile());}
-                    else System.out.println("NO");
+                         if(subFoldersCheck.isSelected()){
+                              FolderCreater.fc.setSubFoldCheck(true);
+                              s.start(fold.getSelectedFile());
+                              m.start(fold.getSelectedFile());
+                              m.deleteOriginal(fold.getSelectedFile());
+                              }
+                         else{
+                              FolderCreater.fc.setSubFoldCheck(false);
+                              s.start(fold.getSelectedFile());
+                              m.start(fold.getSelectedFile()); 
+                              m.deleteOriginal(fold.getSelectedFile());
+                       
+                              } 
                     } else JOptionPane.showMessageDialog(null, "Ingen mappe valgt.","Error",JOptionPane.ERROR_MESSAGE);
           }});          
           initiatePanel.add(initFolderCreate, BorderLayout.LINE_START);
